@@ -48,7 +48,8 @@ export default class NumberInput extends React.Component<Props, {}> {
     showTooltips: PropTypes.bool,
     size: PropTypes.oneOf(['mini', 'small', 'large', 'big', 'huge', 'massive']),
     stepAmount: PropTypes.number,
-    valueType: PropTypes.oneOf(['integer', 'decimal'])
+    valueType: PropTypes.oneOf(['integer', 'decimal']),
+    keyboardChange: PropTypes.bool
   };
 
   // noinspection MagicNumberJS
@@ -69,7 +70,8 @@ export default class NumberInput extends React.Component<Props, {}> {
     showTooltips: true,
     size: 'small',
     stepAmount: 1,
-    valueType: 'integer'
+    valueType: 'integer',
+    keyboardChange: false
   };
 
   timeoutIDMap = {
@@ -173,7 +175,7 @@ export default class NumberInput extends React.Component<Props, {}> {
   };
 
   getInputComponent = (): Element<*> => {
-    const { buttonPlacement, disabled, maxLength, placeholder, showError, size, value } = this.props;
+    const { buttonPlacement, disabled, maxLength, placeholder, showError, size, value, keyboardChange } = this.props;
     const inputStyle = {
       ...style.common.input,
       ...style[buttonPlacement].input
@@ -189,7 +191,7 @@ export default class NumberInput extends React.Component<Props, {}> {
           value={value}
           onChange={this.changeValue}
           onBlur={this.onInputBlur}
-          onKeyDown={this.onKeyDown}
+          onKeyDown={keyboardChange?this.onKeyDown:null}
         />
       </div>
     );
